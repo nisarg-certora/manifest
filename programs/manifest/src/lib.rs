@@ -20,10 +20,9 @@ use program::{
 };
 use solana_program::{
     account_info::{AccountInfo, next_account_info}, declare_id, entrypoint::ProgramResult, program_error::ProgramError,
-    pubkey::Pubkey,
+    pubkey::Pubkey, system_program
 };
 
-use solana_sdk::system_program;
 #[cfg(not(feature = "no-entrypoint"))]
 use solana_security_txt::security_txt;
 use state::MarketFixed;
