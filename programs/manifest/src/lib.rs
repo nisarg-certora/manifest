@@ -19,12 +19,15 @@ use program::{
     ManifestInstruction,
 };
 use solana_program::{
-    account_info::AccountInfo, declare_id, entrypoint::ProgramResult, program_error::ProgramError,
+    account_info::{AccountInfo, next_account_info}, declare_id, entrypoint::ProgramResult, program_error::ProgramError,
     pubkey::Pubkey,
 };
 
+use solana_sdk::system_program;
 #[cfg(not(feature = "no-entrypoint"))]
 use solana_security_txt::security_txt;
+use state::MarketFixed;
+use validation::{ManifestAccountInfo, Program, Signer};
 
 #[cfg(not(feature = "no-entrypoint"))]
 security_txt! {
@@ -95,6 +98,19 @@ pub fn process_instruction(
         }
         ManifestInstruction::GlobalClean => {
             process_global_clean(program_id, accounts, data)?;
+        }
+        ManifestInstruction::CleanupMarket => {
+            let account_iter = &mut accounts.iter();
+
+            let payer = Signer::new_payer(next_account_info(account_iter)?)?;
+            let market: ManifestAccountInfo<MarketFixed> =
+                ManifestAccountInfo::<MarketFixed>::new(next_account_info(account_iter)?)?;
+            let system_program: Program =
+                Program::new(next_account_info(account_iter)?, &system_program::id())?;
+            
+            // Take all lamports from the market
+            *payer.try_borrow_mut_lamports() += market.lamports();
+            *market.try_borrow_mut_lamports() = 0;
         }
     }
 

@@ -843,6 +843,40 @@
         "type": "u8",
         "value": 12
       }
+    },
+    {
+      "name": "CleanupMarket",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer for this tx, receiver of rent deposit"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 13
+      }
     }
   ],
   "accounts": [

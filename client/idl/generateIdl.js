@@ -220,6 +220,9 @@ function modifyIdlCore(programName) {
             },
           });
           break;
+        case 'CleanupMarket': {
+          break;
+        }
         default: {
           console.log(instruction);
           throw new Error('Unexpected instruction');

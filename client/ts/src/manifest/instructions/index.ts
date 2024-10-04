@@ -1,5 +1,6 @@
 export * from './BatchUpdate';
 export * from './ClaimSeat';
+export * from './CleanupMarket';
 export * from './CreateMarket';
 export * from './Deposit';
 export * from './Expand';

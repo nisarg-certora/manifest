@@ -140,6 +140,11 @@ pub enum ManifestInstruction {
     #[account(2, name = "system_program", desc = "System program")]
     #[account(3, writable, name = "global", desc = "Global account")]
     GlobalClean = 12,
+
+    #[account(0, writable, signer, name = "payer", desc = "Payer for this tx, receiver of rent deposit")]
+    #[account(1, writable, name = "market", desc = "Account holding all market state")]
+    #[account(2, name = "system_program", desc = "System program")]
+    CleanupMarket = 13,
 }
 
 impl ManifestInstruction {
