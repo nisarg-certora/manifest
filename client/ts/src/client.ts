@@ -951,10 +951,10 @@ export class ManifestClient {
     );
   }
 
-  public cleanupMarketIx(): TransactionInstruction {
+  public static cleanupMarketIx(payer: PublicKey, market: PublicKey): TransactionInstruction {
     return createCleanupMarketInstruction({
-      payer: this.payer,
-      market: this.market.address,
+      payer: payer,
+      market: market,
     });
   }
 

@@ -399,63 +399,9 @@ export class Market {
     // _padding2: [u32; 3],
     // _padding3: [u64; 8],
 
-    const bids: RestingOrder[] =
-      bidsRootIndex != NIL
-        ? deserializeRedBlackTree(
-            data.subarray(FIXED_MANIFEST_HEADER_SIZE),
-            bidsRootIndex,
-            restingOrderBeet,
-          ).map((restingOrderInternal: RestingOrderInternal) => {
-            return {
-              trader: publicKeyBeet.deserialize(
-                data.subarray(
-                  Number(restingOrderInternal.traderIndex) +
-                    16 +
-                    FIXED_MANIFEST_HEADER_SIZE,
-                  Number(restingOrderInternal.traderIndex) +
-                    48 +
-                    FIXED_MANIFEST_HEADER_SIZE,
-                ),
-              )[0].publicKey,
-              numBaseTokens:
-                toNum(restingOrderInternal.numBaseAtoms) /
-                10 ** baseMintDecimals,
-              tokenPrice:
-                convertU128(restingOrderInternal.price) *
-                10 ** (baseMintDecimals - quoteMintDecimals),
-              ...restingOrderInternal,
-            };
-          })
-        : [];
+    const bids: RestingOrder[] = [];
 
-    const asks: RestingOrder[] =
-      asksRootIndex != NIL
-        ? deserializeRedBlackTree(
-            data.subarray(FIXED_MANIFEST_HEADER_SIZE),
-            asksRootIndex,
-            restingOrderBeet,
-          ).map((restingOrderInternal: RestingOrderInternal) => {
-            return {
-              trader: publicKeyBeet.deserialize(
-                data.subarray(
-                  Number(restingOrderInternal.traderIndex) +
-                    16 +
-                    FIXED_MANIFEST_HEADER_SIZE,
-                  Number(restingOrderInternal.traderIndex) +
-                    48 +
-                    FIXED_MANIFEST_HEADER_SIZE,
-                ),
-              )[0].publicKey,
-              numBaseTokens:
-                toNum(restingOrderInternal.numBaseAtoms) /
-                10 ** baseMintDecimals,
-              tokenPrice:
-                convertU128(restingOrderInternal.price) *
-                10 ** (baseMintDecimals - quoteMintDecimals),
-              ...restingOrderInternal,
-            };
-          })
-        : [];
+    const asks: RestingOrder[] = [];
 
     const claimedSeats =
       claimedSeatsRootIndex != NIL

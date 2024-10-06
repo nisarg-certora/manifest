@@ -31,14 +31,10 @@ const run = async () => {
     */
   );
   for (const market of markets) {
-    const client = await ManifestClient.getClientForMarket(
-      connection,
-      market.pubkey,
-      keypair,
-    );
-    const tx = new Transaction().add(client.cleanupMarketIx());
+    console.log('cleaning', market.pubkey);
+    const tx = new Transaction().add(ManifestClient.cleanupMarketIx(keypair.publicKey, market.pubkey));
     const signature = await sendAndConfirmTransaction(connection, tx, [keypair]);
-    console.log('cancelled', market.pubkey, signature);
+    console.log('cleaned', market.pubkey, signature);
   }
 };
 
