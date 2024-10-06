@@ -10,13 +10,13 @@ pub mod wrapper_state;
 
 use hypertree::trace;
 use instruction::ManifestWrapperInstruction;
+use manifest::validation::{Program, Signer};
 use processors::{
-    batch_upate::process_batch_update, claim_seat::process_claim_seat,
-    create_wrapper::process_create_wrapper, deposit::process_deposit, withdraw::process_withdraw,
+    batch_upate::process_batch_update, claim_seat::process_claim_seat, create_wrapper::process_create_wrapper, deposit::process_deposit, shared::WrapperStateAccountInfo, withdraw::process_withdraw
 };
 use solana_program::{
-    account_info::AccountInfo, declare_id, entrypoint::ProgramResult, program_error::ProgramError,
-    pubkey::Pubkey,
+    account_info::{AccountInfo, next_account_info}, declare_id, entrypoint::ProgramResult, program_error::ProgramError,
+    pubkey::Pubkey, system_program
 };
 
 #[cfg(not(feature = "no-entrypoint"))]
@@ -67,6 +67,19 @@ pub fn process_instruction(
         }
         ManifestWrapperInstruction::BatchUpdate => {
             process_batch_update(program_id, accounts, data)?;
+        }
+        ManifestWrapperInstruction::CleanupWrapper => {
+            let account_iter = &mut accounts.iter();
+
+            let payer = Signer::new_payer(next_account_info(account_iter)?)?;
+            let wrapper_state: WrapperStateAccountInfo =
+                WrapperStateAccountInfo::new(next_account_info(account_iter)?)?;
+            let _system_program: Program =
+                Program::new(next_account_info(account_iter)?, &system_program::id())?;
+
+            // Take all lamports from the wrapper
+            **payer.lamports.borrow_mut() += wrapper_state.lamports();
+            **wrapper_state.lamports.borrow_mut() = 0;
         }
     }
 

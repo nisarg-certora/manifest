@@ -51,6 +51,11 @@ pub enum ManifestWrapperInstruction {
     #[account(3, writable, name = "market", desc = "Account holding all market state")]
     #[account(4, name = "system_program", desc = "System program")]
     BatchUpdate = 4,
+
+    #[account(0, writable, name = "payer", desc = "Payer")]
+    #[account(1, writable, name = "wrapper", desc = "Wrapper")]
+    #[account(2, name = "system_program", desc = "System program")]
+    CleanupWrapper = 5,
 }
 
 impl ManifestWrapperInstruction {

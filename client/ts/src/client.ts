@@ -36,6 +36,7 @@ import {
   WrapperPlaceOrderParams,
   createBatchUpdateInstruction,
   createClaimSeatInstruction,
+  createCleanupWrapperInstruction,
   createCreateWrapperInstruction,
   createDepositInstruction,
   createWithdrawInstruction,
@@ -955,6 +956,13 @@ export class ManifestClient {
     return createCleanupMarketInstruction({
       payer: payer,
       market: market,
+    });
+  }
+
+  public static cleanupWrapperIx(payer: PublicKey, wrapper: PublicKey): TransactionInstruction {
+    return createCleanupWrapperInstruction({
+      payer: payer,
+      wrapper: wrapper,
     });
   }
 

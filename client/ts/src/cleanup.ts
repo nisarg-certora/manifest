@@ -1,6 +1,7 @@
 import { Connection, Keypair, Transaction, sendAndConfirmTransaction } from '@solana/web3.js';
 import { PROGRAM_ID } from './manifest';
 import { ManifestClient } from './client';
+import { PROGRAM_ID as WRAPPER_PROGRAM_ID } from './wrapper';
 
 const { RPC_URL, PRIVATE_KEY } = process.env;
 
@@ -35,6 +36,15 @@ const run = async () => {
     const tx = new Transaction().add(ManifestClient.cleanupMarketIx(keypair.publicKey, market.pubkey));
     const signature = await sendAndConfirmTransaction(connection, tx, [keypair]);
     console.log('cleaned', market.pubkey, signature);
+  }
+  const wrappers = await connection.getProgramAccounts(
+    WRAPPER_PROGRAM_ID,
+  );
+  for (const wrapper of wrappers) {
+    console.log('cleaning', wrapper.pubkey);
+    const tx = new Transaction().add(ManifestClient.cleanupWrapperIx(keypair.publicKey, wrapper.pubkey));
+    const signature = await sendAndConfirmTransaction(connection, tx, [keypair]);
+    console.log('cleaned', wrapper.pubkey, signature);
   }
 };
 

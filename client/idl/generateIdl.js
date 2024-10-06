@@ -405,6 +405,9 @@ function modifyIdlCore(programName) {
         case 'Expand': {
           break;
         }
+        case 'CleanupWrapper': {
+          break;
+        }
         default: {
           console.log(instruction);
           throw new Error('Unexpected instruction');
