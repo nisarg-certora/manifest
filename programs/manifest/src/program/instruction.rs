@@ -155,7 +155,7 @@ impl ManifestInstruction {
 
 #[test]
 fn test_instruction_serialization() {
-    let num_instructions: u8 = 12;
+    let num_instructions: u8 = 13;
     for i in 0..=255 {
         let instruction: ManifestInstruction = match ManifestInstruction::try_from(i) {
             Ok(j) => {

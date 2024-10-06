@@ -104,12 +104,12 @@ pub fn process_instruction(
             let payer = Signer::new_payer(next_account_info(account_iter)?)?;
             let market: ManifestAccountInfo<MarketFixed> =
                 ManifestAccountInfo::<MarketFixed>::new(next_account_info(account_iter)?)?;
-            let system_program: Program =
+            let _system_program: Program =
                 Program::new(next_account_info(account_iter)?, &system_program::id())?;
             
             // Take all lamports from the market
-            *payer.try_borrow_mut_lamports() += market.lamports();
-            *market.try_borrow_mut_lamports() = 0;
+            **payer.lamports.borrow_mut() += market.lamports();
+            **market.lamports.borrow_mut() = 0;
         }
     }
 
