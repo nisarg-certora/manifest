@@ -18,6 +18,7 @@ import {
   getMint,
 } from '@solana/spl-token';
 import {
+  createCleanupMarketInstruction,
   createCreateMarketInstruction,
   createGlobalAddTraderInstruction,
   createGlobalCreateInstruction,
@@ -949,6 +950,14 @@ export class ManifestClient {
       },
     );
   }
+
+  public cleanupMarketIx(): TransactionInstruction {
+    return createCleanupMarketInstruction({
+      payer: this.payer,
+      market: this.market.address,
+    });
+  }
+
 }
 
 /**
