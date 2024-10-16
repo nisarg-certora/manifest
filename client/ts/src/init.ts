@@ -93,14 +93,44 @@ const run = async () => {
   await createMarket(
     connection,
     payerKeypair,
-    new PublicKey("6cvrZWgEUkr82yKAmxp5cQu7wgYYBPULf16EUBp4pump"),
+    new PublicKey("METAewgxyPbgwsseH8T16a39CQ5VyVxZi9zXiDPY18m"),
+    new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
+  );
+  await createMarket(
+    connection,
+    payerKeypair,
+    new PublicKey("rndrizKT3MK1iimdxRdWabcF7Zg7AR5T4nud4EkHBof"),
+    new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
+  );
+  await createMarket(
+    connection,
+    payerKeypair,
+    new PublicKey("DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"),
+    new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
+  );
+  await createMarket(
+    connection,
+    payerKeypair,
+    new PublicKey("DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"),
+    new PublicKey("So11111111111111111111111111111111111111112")
+  );
+  await createMarket(
+    connection,
+    payerKeypair,
+    new PublicKey("So11111111111111111111111111111111111111112"),
+    new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
+  );
+  await createMarket(
+    connection,
+    payerKeypair,
+    new PublicKey("2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo"),
     new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
   );
   await createGlobal(
     connection,
     payerKeypair,
-    new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
-  )
+    new PublicKey("So11111111111111111111111111111111111111112")
+  );
 };
 
 run().catch(console.error);
